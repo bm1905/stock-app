@@ -1,24 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import reduxThunk from 'redux-thunk';
 
-import './index.scss';
-import 'react-dropdown/style.css';
+import './index.css';
+import App from './App';
 
-import App from './components/App';
-import reducers from './reducers';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import 'react-toastify/dist/ReactToastify.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-    reducers,
-    composeEnhancers(applyMiddleware(reduxThunk))
-);
-
-ReactDOM.render(
-    <Provider store={store} >
-        <App />
-    </Provider>,
-    document.querySelector('#root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));

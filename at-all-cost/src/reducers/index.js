@@ -1,11 +1,20 @@
-import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
-import stocksReducer from './stocksReducer';
+import { dashboardReducer } from './dashboard-reducer';
 
-export default combineReducers({
-    form: formReducer,
-    stocks: stocksReducer
-});
+export const init = () => {
+
+    const reducer = combineReducers({
+        form: formReducer,
+        dashboardStocks: dashboardReducer
+    });
+    
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+
+    return store;
+}
 
 // More reducers to be added

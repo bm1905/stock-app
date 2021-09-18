@@ -1,8 +1,57 @@
-import stocks from '../apis/stocks';
 import { timeParse } from "d3-time-format";
+import axiosService from '../services/axios-service';
+
 import {
-    FETCH_STOCKS
+    FETCH_STOCKS,
+    FETCH_DASHBOARD_DATA,
+    FETCH_DASHBOARD_DATA_INIT,
+    FETCH_DASHBOARD_DATA_SUCCESS,
+    FETCH_DASHBOARD_DATA_FAIL
 } from './types';
+
+const axiosInstance = axiosService.getInstance();
+
+const fetchDashboardDataInit = () => {
+    return {
+        type: FETCH_DASHBOARD_DATA_INIT
+    }
+}
+
+const fetchDashboardDataSuccess = (dashboardStocks) => {
+    return {
+        type: FETCH_DASHBOARD_DATA_SUCCESS,
+        dashboardStocks
+    }
+}
+
+const fetchDashboardDataFail = (errors) => {
+    return {
+        type: FETCH_DASHBOARD_DATA_FAIL,
+        errors
+    }
+}
+
+
+
+export const fetchDashboardData = () => {
+    return dispatch => {
+        dispatch(fetchDashboardDataInit());
+
+        axiosInstance.get(`/stocks`)
+            .then(res => res.data.map(element => {
+                var d = parseData(parseDate)(element);
+                d.SP500Close = +d.SP500Close;
+                d.AAPLClose = +d.AAPLClose;
+                d.GEClose = +d.GEClose;
+                return d;
+                }))
+            .then(dashboardStocks => dispatch(fetchDashboardDataSuccess(dashboardStocks)))
+            .catch(err => console.log(err));
+            // .catch(({ response }) => dispatch(fetchDashboardDataFail(response.data.errors)))
+    }
+}
+
+
 
 // Refactor this to const
 function parseData(parse) {
@@ -20,24 +69,24 @@ function parseData(parse) {
 const parseDate = timeParse("%Y-%m-%d");
 
 // Yet to connect through redux
-export function getData() {
-    const requestApi = async() => {
-        const response = await stocks.get('/stocks');
-        return response.data.map(element => {
-            var d = parseData(parseDate)(element);
-            d.SP500Close = +d.SP500Close;
-            d.AAPLClose = +d.AAPLClose;
-            d.GEClose = +d.GEClose;
-            return d;
-            });
-        };
+// export function getData() {
+//     const requestApi = async() => {
+//         const response = await stocks.get('/stocks');
+//         return response.data.map(element => {
+//             var d = parseData(parseDate)(element);
+//             d.SP500Close = +d.SP500Close;
+//             d.AAPLClose = +d.AAPLClose;
+//             d.GEClose = +d.GEClose;
+//             return d;
+//             });
+//         };
 
-	return requestApi();
-}
+// 	return requestApi();
+// }
 
 // Refactor after api is ready
-export const fetchStocks = sector => async dispatch => {
-    const response = await stocks.get(`./stocks/${sector}`);
+// export const fetchStocks = sector => async dispatch => {
+//     const response = await stocks.get(`./stocks/${sector}`);
 
-    dispatch({ type: FETCH_STOCKS, payload: response.data });
-}
+//     dispatch({ type: FETCH_STOCKS, payload: response.data });
+// }
