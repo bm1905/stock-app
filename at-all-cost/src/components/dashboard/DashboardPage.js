@@ -36,7 +36,6 @@ class DashboardPage extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-	console.log("State", state);
     return {
 		dashboardStocks: state.dashboardStocks.data
     };

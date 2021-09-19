@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
 import { dashboardReducer } from './dashboard-reducer';
+import { tickersReducer } from './tickers-reducer';
 
 export const init = () => {
 
     const reducer = combineReducers({
         form: formReducer,
-        dashboardStocks: dashboardReducer
+        dashboardStocks: dashboardReducer,
+        tickers: tickersReducer
     });
     
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -6,7 +6,11 @@ import {
     FETCH_DASHBOARD_DATA,
     FETCH_DASHBOARD_DATA_INIT,
     FETCH_DASHBOARD_DATA_SUCCESS,
-    FETCH_DASHBOARD_DATA_FAIL
+    FETCH_DASHBOARD_DATA_FAIL,
+    FETCH_TICKERS,
+    FETCH_TICKERS_INIT,
+    FETCH_TICKERS_SUCCESS,
+    FETCH_TICKERS_FAIL
 } from './types';
 
 const axiosInstance = axiosService.getInstance();
@@ -61,3 +65,34 @@ const parseData = (parse) => {
 }
 
 const parseDate = timeParse("%Y-%m-%d");
+
+const fetchTickerInit = () => {
+    return {
+        type: FETCH_TICKERS_INIT
+    }
+}
+
+const fetchTickerSuccess = (tickers) => {
+    return {
+        type: FETCH_TICKERS_SUCCESS,
+        tickers
+    }
+}
+
+const fetchTickerFail = (errors) => {
+    return {
+        type: FETCH_TICKERS_FAIL,
+        errors
+    }
+}
+
+export const fetchTickers = () => {
+    return dispatch => {
+        dispatch(fetchTickerInit());
+
+        axiosInstance.get(`/tickers`)
+            .then(res => res.data)
+            .then(tickers => dispatch(fetchTickerSuccess(tickers)))
+            .catch(({ response }) => dispatch(fetchTickerFail(response.data.errors)))
+    }
+}

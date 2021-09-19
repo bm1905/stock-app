@@ -1,4 +1,4 @@
-[
+{ "tickers" : [
     {
       "Symbol": "A",
       "Name": "Agilent Technologies Inc. Common Stock",
@@ -64616,3 +64616,4 @@
       "Industry": "Biotechnology: Electromedical & Electrotherapeutic Apparatus"
     }
   ]
+}
