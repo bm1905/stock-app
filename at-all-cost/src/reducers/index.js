@@ -18,5 +18,3 @@ export const init = () => {
 
     return store;
 }
-
-// More reducers to be added

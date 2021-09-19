@@ -9,5 +9,4 @@ export const FETCH_TICKERS_INIT = 'FETCH_TICKERS_INIT';
 export const FETCH_TICKERS_SUCCESS = 'FETCH_TICKERS_SUCCESS';
 export const FETCH_TICKERS_FAIL = 'FETCH_TICKERS_FAIL';
 
-// More types to go here
 
