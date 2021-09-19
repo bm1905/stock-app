@@ -4,7 +4,7 @@ import { FETCH_DASHBOARD_DATA_INIT,
 
 const INITIAL_STATE = {
     dashboardStocks: {
-        data: {},
+        data: [],
         errors: []
     }
 }
@@ -12,11 +12,11 @@ const INITIAL_STATE = {
 export const dashboardReducer = (state = INITIAL_STATE.dashboardStocks, action) => {
     switch(action.type) {
         case FETCH_DASHBOARD_DATA_INIT:
-            return {...state, data: {}, errors: []};
+            return {...state, data: [], errors: []};
         case FETCH_DASHBOARD_DATA_SUCCESS:
             return {...state, data: action.dashboardStocks};
             case FETCH_DASHBOARD_DATA_FAIL:
-                return Object.assign({}, state, {errors: action.errors, data: {}});
+                return Object.assign({}, state, {errors: action.errors, data: []});
         default:
             return state;
     }
