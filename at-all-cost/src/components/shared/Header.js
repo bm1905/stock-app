@@ -1,71 +1,67 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import SelectSearch, {fuzzySearch} from 'react-select-search';
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import SelectSearch, { fuzzySearch } from "react-select-search";
 
-import * as actions from '../../actions';
+import * as actions from "../../actions";
 
-import { Nav, Button, Navbar, NavDropdown, Form, FormControl } from 'react-bootstrap'
+import {
+  Nav,
+  Button,
+  Navbar,
+  NavDropdown,
+  Form,
+  FormControl,
+  Container,
+} from "react-bootstrap";
+import DarkThemeToggle from "../theme/DarkThemeToggle";
 
 class Header extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(actions.fetchTickers());
+  }
 
-    componentDidMount() {
-		this.props.dispatch(actions.fetchTickers());
-	}
-    
-    render() {
-        if (this.props.tickers === null || this.props.tickers.length <= 0) {
-			return <div>Loading...</div>
-		}
-
-        const countries = [
-            {name: 'Swedish', value: 'sv'},
-            {name: 'English', value: 'en'},
-        ];
-
-        return (
-            <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                    <Nav
-                    className="ms-auto my-2 my-lg-0"
-                    style={{ maxHeight: '300px' }}
-                    navbarScroll
-                    >
-                    <Nav.Link href="#action1">Home</Nav.Link>
-                    </Nav>
-                    
-                    <Form className="d-flex">
-                    <FormControl
-                        type="search"
-                        placeholder="Search"
-                        className="mr-2"
-                        aria-label="Search"
-                    />
-                    <Button variant="outline-success">Search</Button>
-                    
-                    <SelectSearch
-                        options={this.props.tickers}
-                        search
-                        filterOptions={fuzzySearch}
-                        emptyMessage={() => <div style={{ textAlign: 'center', fontSize: '0.8em' }}>Not found renderer</div>}
-                        placeholder="Select your country"
-                    />
-                    
-                    </Form>
-                </Navbar.Collapse>
-            </Navbar>
-        )
+  render() {
+    if (this.props.tickers === null || this.props.tickers.length <= 0) {
+      return <div>Loading...</div>;
     }
+
+    const countries = [
+      { name: "Swedish", value: "sv" },
+      { name: "English", value: "en" },
+    ];
+
+    return (
+        <Navbar bg="dark" variant="dark" expand="lg" className="header-container">
+          <Navbar.Brand href="#home">
+            <img
+              alt=""
+              src={process.env.PUBLIC_URL + "/img/logo.png"}
+              width="40"
+              height="30"
+              className="d-inline-block align-top"
+            />{" "}
+            At All Cost
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="ms-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            >
+              <DarkThemeToggle className="theme-container"/>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-		tickers: state.tickers.data
-    };
-}
+  return {
+    tickers: state.tickers.data,
+  };
+};
 
 export default connect(mapStateToProps)(Header);
-
-

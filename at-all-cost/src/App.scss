@@ -1,1 +1,9 @@
 @import 'styles/main.scss';
+@import url("https://fonts.googleapis.com/css2?family=Questrial&display=swap");
+
+html,
+body {
+    font-family: "Questrial", sans-serif !important;
+    font-size: 13px;
+    letter-spacing: 1px;
+}

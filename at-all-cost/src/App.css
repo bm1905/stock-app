@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Questrial&display=swap");
+.header-container {
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.theme-container {
+  color: red;
+  background-color: red; }
+
+.dashboard-container-text {
+  text-align: center;
+  padding: 20px; }
+
+.dashboard-container-chart {
+  border: 1px solid #f0f0f0;
+  max-width: 800px;
+  min-width: 500px;
+  margin: auto;
+  padding: 10px; }
+
+.dashboard-container-options {
+  justify-content: center;
+  display: flex;
+  padding: 10px; }
+
+.Dropdown-control {
+  background-color: #e3e6e9 !important; }
+
+.react-stockcharts-tooltip {
+  fill: #949494; }
+
+.react-stockcharts-tooltip-label {
+  fill: #2ca02c; }
+
+html,
+body {
+  font-family: "Questrial", sans-serif !important;
+  font-size: 13px;
+  letter-spacing: 1px; }

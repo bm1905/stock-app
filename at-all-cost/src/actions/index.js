@@ -2,19 +2,18 @@ import { timeParse } from "d3-time-format";
 import axiosService from '../services/axios-service';
 
 import {
-    FETCH_STOCKS,
-    FETCH_DASHBOARD_DATA,
     FETCH_DASHBOARD_DATA_INIT,
     FETCH_DASHBOARD_DATA_SUCCESS,
     FETCH_DASHBOARD_DATA_FAIL,
-    FETCH_TICKERS,
     FETCH_TICKERS_INIT,
     FETCH_TICKERS_SUCCESS,
-    FETCH_TICKERS_FAIL
+    FETCH_TICKERS_FAIL,
+    TOGGLE_DARKTHEME
 } from './types';
 
 const axiosInstance = axiosService.getInstance();
 
+/// Dashboard functions
 const fetchDashboardDataInit = () => {
     return {
         type: FETCH_DASHBOARD_DATA_INIT
@@ -38,7 +37,6 @@ const fetchDashboardDataFail = (errors) => {
 export const fetchDashboardData = () => {
     return dispatch => {
         dispatch(fetchDashboardDataInit());
-
         axiosInstance.get(`/stocks`)
             .then(res => res.data.map(element => {
                 var d = parseData(parseDate)(element);
@@ -61,11 +59,12 @@ const parseData = (parse) => {
 		d.close = +d.close;
 		d.volume = +d.volume;
 		return d;
-	};
+	}
 }
 
 const parseDate = timeParse("%Y-%m-%d");
 
+/// Stock tickers functions
 const fetchTickerInit = () => {
     return {
         type: FETCH_TICKERS_INIT
@@ -89,10 +88,22 @@ const fetchTickerFail = (errors) => {
 export const fetchTickers = () => {
     return dispatch => {
         dispatch(fetchTickerInit());
-
         axiosInstance.get(`/tickers`)
             .then(res => res.data)
             .then(tickers => dispatch(fetchTickerSuccess(tickers)))
             .catch(({ response }) => dispatch(fetchTickerFail(response.data.errors)))
+    }
+}
+
+/// Theme functions
+export const toggleDarkTheme = () => {
+    return dispatch => {
+        dispatch(toggleDarkThemeInit());
+    }
+}
+
+const toggleDarkThemeInit = () => {
+    return {
+        type: TOGGLE_DARKTHEME
     }
 }

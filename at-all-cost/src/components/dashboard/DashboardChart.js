@@ -31,8 +31,6 @@ class DashboardChart extends React.Component {
 		.accessor(d => d.compare)
 		.merge((d, c) => { d.compare = c; });
 		
-		
-
 		const xScaleProvider = discontinuousTimeScaleProvider
 			.inputDateAccessor(d => d.date);
 
@@ -43,12 +41,9 @@ class DashboardChart extends React.Component {
 			displayXAccessor,
 		} = xScaleProvider(initialData);
 
-
-
 		const start = xAccessor(last(data));
 		const end = xAccessor(data[Math.max(0, data.length - 150)]);
 		const xExtents = [start, end];
-
 
 		return (
 			<ChartCanvas height={400}
@@ -64,9 +59,8 @@ class DashboardChart extends React.Component {
 				xExtents={xExtents}
 			>
 				<Chart id={1} yExtents={d => d.compare} >
-					
-					<XAxis axisAt="bottom" orient="bottom" />
-					<YAxis axisAt="right" orient="right" ticks={5} tickFormat={format(".0%")} />
+					<XAxis axisAt="bottom" orient="bottom" tickStroke="#949494" stroke="#949494"/>
+					<YAxis axisAt="right" orient="right" ticks={5} tickFormat={format(".0%")} tickStroke="#949494" stroke="#949494"/>
 
 					<MouseCoordinateX
 						at="bottom"
@@ -94,20 +88,18 @@ class DashboardChart extends React.Component {
 						yAccessor={d => d[options[0]]}
 						yLabel={options[0].replace('Close', '')}
 						yDisplayFormat={format(".2f")}
-						valueStroke="#ff7f0e"
-						labelStroke="#4682B4"
+						labelFill="#949494"
+						valueFill="#949494"
 						origin={[-40, 20]}/>
 					<SingleValueTooltip
 						yAccessor={d => d[options[1]]}
 						yLabel={options[1].replace('Close', '')}
 						yDisplayFormat={format(".2f")}
-						valueStroke="#2ca02c"
-						labelStroke="#4682B4"
+						labelFill="#949494"
+						valueFill="#949494"
 						origin={[-40, 35]}/>
 				</Chart>
-                
-				<CrossHairCursor />
-
+				<CrossHairCursor stroke="#949494"/>
 			</ChartCanvas>
 		);
 	}

@@ -1,4 +1,13 @@
 @import "variables.scss";
 @import "header/header.scss";
+@import "dashboard/dashboard.scss";
 @import "form/form.scss";
 @import "footer/footer.scss";
+
+.react-stockcharts-tooltip {
+    fill: #949494;
+  }
+
+.react-stockcharts-tooltip-label {
+    fill: #2ca02c;
+}

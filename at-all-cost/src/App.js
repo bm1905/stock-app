@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
+// Library imports
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 
+// Custom imports
+// TODO - Make everything default export
 import Header from './components/shared/Header';
 import DashboardPage from './components/dashboard/DashboardPage';
-
-import { AboutUs } from './components/shared/AboutUs';
+import { AboutUs } from './components/about-us/AboutUs';
 import { Footer } from './components/shared/Footer';
-
-import * as actions from './actions';
+import { GlobalStyles } from './components/theme/GlobalStyle';
+import DarkThemeProvider from './components/theme/DarkThemeProvider';
 
 import './App.css';
 
-const store = require('./reducers').init();
+const { store, persistor } = require('./reducers').init();
 
-
-// More routes to be added here
-class App extends Component {
-    componentWillUnmount() { }
-
-    render() {
-        return (
-          <Provider store={store}>
+function App() {
+    return (
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+          <DarkThemeProvider>
+            <GlobalStyles/>
             <BrowserRouter>
               <div className='App'>
                 <ToastContainer />
@@ -37,13 +36,13 @@ class App extends Component {
                     {/* <Route exact path='/stock-lists' component={stockLists} /> */}
                   </Switch>
                 </div>
-                {/* <InfoFooter /> */}
                 <Footer />
               </div>
             </BrowserRouter>
-          </Provider>
-        );
-    }
+            </DarkThemeProvider>
+            </PersistGate>
+        </Provider>
+    );
 }
 
 export default App;
